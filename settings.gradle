@@ -1,5 +1,6 @@
 include "spring-aop"
 include "spring-aspects"
+include "spring-huaxu-test"
 include "spring-beans"
 include "spring-context"
 include "spring-context-support"

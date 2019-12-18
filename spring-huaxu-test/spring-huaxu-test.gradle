@@ -1,0 +1,26 @@
+description = "Spring huaxu test"
+
+apply plugin: "groovy"
+
+dependencies {
+    compile(project(":spring-core"))
+    compile(project(":spring-beans"))
+    compile(project(":spring-aop"))
+    compile(project(":spring-context"))
+    compile(project(":spring-jdbc"))
+    compile(project(":spring-orm"))
+    compile(project(":spring-test"))
+    compile(project(":spring-tx"))
+    compile(project(":spring-web"))
+    
+    testCompile(project(":spring-aop"))
+    testCompile(project(":spring-core"))
+    testCompile(project(":spring-context"))
+    testCompile(project(":spring-jdbc"))
+    testCompile(project(":spring-orm"))
+    testCompile(project(":spring-test"))
+    testCompile(project(":spring-tx"))
+    testCompile(project(":spring-web"))
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
