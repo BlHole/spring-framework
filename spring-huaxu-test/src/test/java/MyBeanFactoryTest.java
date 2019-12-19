@@ -5,6 +5,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * <p>项目名称: spring</p>
@@ -21,6 +25,12 @@ public class MyBeanFactoryTest {
 
 		MyBean myBean = (MyBean) beanFactory.getBean("myBean");
 		Assert.assertTrue("strTest".equals(myBean.getStr()));
+	}
+
+	@Test
+	public void testResource() throws IOException {
+		Resource resource = new ClassPathResource("spring-context.xml");
+		InputStream inputStream = resource.getInputStream();
 	}
 
 	@Test

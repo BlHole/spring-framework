@@ -30,10 +30,21 @@ import org.springframework.lang.Nullable;
  * preload all their bean definitions (such as XML-based factories) may implement
  * this interface.
  *
+ * 扩展{@link BeanFactory}接口，由bean工厂实现
+ * 可以枚举所有bean实例，而不是尝试bean查找
+ * 按客户要求，逐一列出。BeanFactory实现
+ * 预加载所有的bean定义(比如基于xml的工厂)
+ * 此接口。
+ *
  * <p>If this is a {@link HierarchicalBeanFactory}, the return values will <i>not</i>
- * take any BeanFactory hierarchy into account, but will relate only to the beans
- * defined in the current factory. Use the {@link BeanFactoryUtils} helper class
- * to consider beans in ancestor factories too.
+ *  * take any BeanFactory hierarchy into account, but will relate only to the beans
+ *  * defined in the current factory. Use the {@link BeanFactoryUtils} helper class
+ *  * to consider beans in ancestor factories too.
+ *
+ * 如果这是一个{@link HierarchicalBeanFactory}，返回值将而不是
+ * 考虑任何BeanFactory层次结构，但只与bean相关
+ * 定义在当前工厂。使用{@link BeanFactoryUtils}帮助类
+ * 也可以考虑祖先工厂中的bean。
  *
  * <p>The methods in this interface will just respect bean definitions of this factory.
  * They will ignore any singleton beans that have been registered by other means like
@@ -48,6 +59,10 @@ import org.springframework.lang.Nullable;
  * <p><b>NOTE:</b> With the exception of {@code getBeanDefinitionCount}
  * and {@code containsBeanDefinition}, the methods in this interface
  * are not designed for frequent invocation. Implementations may be slow.
+ *
+ * 注:除{@code getBeanDefinitionCount}
+ * 和{@code containsBeanDefinition}，该接口中的方法
+ * 不适合频繁调用。实现可能很慢。
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

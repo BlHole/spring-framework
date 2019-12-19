@@ -28,6 +28,7 @@ package org.springframework.beans.factory;
  * Refer to {@link org.springframework.context.support.ApplicationContextAwareProcessor}
  * for an example of processing specific {@code *Aware} interface callbacks.
  *
+ * 知道的，已感知的，意识到的，所以这些接口从字面意思应该是能感知到所有Aware前面的含义。
  * @author Chris Beams
  * @author Juergen Hoeller
  * @since 3.1

@@ -1,3 +1,5 @@
+import org.springframework.beans.factory.BeanFactory;
+
 /**
  * <p>project: spring</p>
  * <p>description: </p>
@@ -7,6 +9,5 @@
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println();
 	}
 }

@@ -255,6 +255,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	/**
 	 * Return the EntityResolver to use, building a default resolver
 	 * if none specified.
+	 * 为何要在loadDocument方法中涉及一个参数EntityResolver?
+	 * 官网解释:
+	 * 1 .如果SAX应用程序需要实现自定义处理外部实体, 则必须实现此接口并使用setEntityResolver
+	 *    方法向SAX驱动器注册一个实例.
+	 * 2. 所以这个的作用是项目本身就可以提供一个如何寻找DTD声明的方法, 即由程序来实现寻找DTD声明的过程,
+	 *    比如我们将DTD放到项目某处, 在实现时直接将此文档读取并返回给SAX即可. 避免通过网络来寻找对应的声明
 	 */
 	protected EntityResolver getEntityResolver() {
 		if (this.entityResolver == null) {
@@ -322,6 +328,8 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			currentResources = new HashSet<>(4);
 			this.resourcesCurrentlyBeingLoaded.set(currentResources);
 		}
+		// 通过属性来记录已经加载的资源， 因为是Set方法， 重写了equals
+		// 防止循环加载, 使用一个 ThreadLocal<Set<EncodedResource>>
 		if (!currentResources.add(encodedResource)) {
 			throw new BeanDefinitionStoreException(
 					"Detected cyclic loading of " + encodedResource + " - check your import definitions!");
@@ -333,6 +341,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 				if (encodedResource.getEncoding() != null) {
 					inputSource.setEncoding(encodedResource.getEncoding());
 				}
+				// 准备加载 => 真正的核心逻辑
 				return doLoadBeanDefinitions(inputSource, encodedResource.getResource());
 			}
 			finally {
@@ -346,6 +355,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 		finally {
 			currentResources.remove(encodedResource);
 			if (currentResources.isEmpty()) {
+				// ThreadLocal<T> 资源的回收
 				this.resourcesCurrentlyBeingLoaded.remove();
 			}
 		}
@@ -389,7 +399,11 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			throws BeanDefinitionStoreException {
 
 		try {
+			// 获取对XML文件的验证模式
+			// 加载XML文件, 并得到对应的Document
 			Document doc = doLoadDocument(inputSource, resource);
+
+			// 根据返回的Document注册Bean信息
 			int count = registerBeanDefinitions(doc, resource);
 			if (logger.isDebugEnabled()) {
 				logger.debug("Loaded " + count + " bean definitions from " + resource);
@@ -442,12 +456,21 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * <p>Override this method if you would like full control over the validation
 	 * mode, even when something other than {@link #VALIDATION_AUTO} was set.
 	 * @see #detectValidationMode
+	 *
+	 * 确定指定的{@link Resource}的验证模式。
+	 * 如果没有配置显式验证模式，则进行验证
+	 * mode从给定资源获取{@link #detectValidationMode detect}。
+	 * 覆盖这个方法，如果你想完全控制验证
+	 * 模式，即使设置的不是{@link #VALIDATION_AUTO}。
+	 *  @see # detectValidationMode
 	 */
 	protected int getValidationModeForResource(Resource resource) {
 		int validationModeToUse = getValidationMode();
+		// 如果手动指定了验证模式则使用指定的验证模式
 		if (validationModeToUse != VALIDATION_AUTO) {
 			return validationModeToUse;
 		}
+		// 如果未指定则使用自动检测
 		int detectedMode = detectValidationMode(resource);
 		if (detectedMode != VALIDATION_AUTO) {
 			return detectedMode;
@@ -508,9 +531,13 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 * @see BeanDefinitionDocumentReader#registerBeanDefinitions
 	 */
 	public int registerBeanDefinitions(Document doc, Resource resource) throws BeanDefinitionStoreException {
+		// 使用反射实例化对象
 		BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();
+		// 记录统计前beanDefinition的加载个数
 		int countBefore = getRegistry().getBeanDefinitionCount();
+		// 加载及注册bean
 		documentReader.registerBeanDefinitions(doc, createReaderContext(resource));
+		// 记录本次加载的beanDefinition个数
 		return getRegistry().getBeanDefinitionCount() - countBefore;
 	}
 
