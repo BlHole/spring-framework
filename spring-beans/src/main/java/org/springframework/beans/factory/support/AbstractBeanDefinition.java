@@ -140,22 +140,30 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private volatile Object beanClass;
 
+	// bean的作用范围， 对应bean的scope属性
 	@Nullable
 	private String scope = SCOPE_DEFAULT;
 
+	// 是否抽象
 	private boolean abstractFlag = false;
 
+	// 是否延迟加载
 	private boolean lazyInit = false;
 
+	// 自动注入模式
 	private int autowireMode = AUTOWIRE_NO;
 
+	// 依赖检查
 	private int dependencyCheck = DEPENDENCY_CHECK_NONE;
 
 	@Nullable
 	private String[] dependsOn;
 
+	// 当autowireCandidate为false时， 这样容器在查找自动装配对象时，
+	// 不会考虑该bean， 但是该bean还是可以使用自动装配注入其它bean
 	private boolean autowireCandidate = true;
 
+	// 自动装配bean时有多个候选者，优先选用这个注入
 	private boolean primary = false;
 
 	private final Map<String, AutowireCandidateQualifier> qualifiers = new LinkedHashMap<>();
@@ -163,6 +171,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private Supplier<?> instanceSupplier;
 
+	// 允许访问非公开的构造器和方法
 	private boolean nonPublicAccessAllowed = true;
 
 	private boolean lenientConstructorResolution = true;
@@ -192,13 +201,18 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	private boolean enforceDestroyMethod = true;
 
+	// 是否是用户定义的 而不是应用程序本身定义的， 创建aop时为true
 	private boolean synthetic = false;
 
+	// 默认是用户，
+	// 用户 | 某些复杂配置的一部分 | 完全内部使用，与用户无关
 	private int role = BeanDefinition.ROLE_APPLICATION;
 
+	// bean的描述信息
 	@Nullable
 	private String description;
 
+	// bean定义的资源
 	@Nullable
 	private Resource resource;
 

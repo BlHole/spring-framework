@@ -10,4 +10,5 @@
 
 	<aop:aspectj-autoproxy />
 	<bean id="aopBean" class="bean.aop.AopBean"/>
+	<beans></beans>
 </beans>

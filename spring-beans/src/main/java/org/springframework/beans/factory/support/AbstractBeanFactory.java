@@ -239,10 +239,17 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType,
 			@Nullable final Object[] args, boolean typeCheckOnly) throws BeansException {
 
+		// 提取对应的beanName
 		final String beanName = transformedBeanName(name);
 		Object bean;
 
 		// Eagerly check singleton cache for manually registered singletons.
+		/**
+		 *  检查缓存中或者实例工厂中是否有对应的实例
+		 *	创建单例bean的时候会存在依赖注入的情况， 而在创建依赖的时候， 要避免循环依赖
+		 *	spring创建bean的原则是不等bean创建完成就会将创建的bean的ObjectFactory提早曝光
+		 *	也就是ObjectFactory加入到缓存中， 一旦下个bean创建是需要依赖上个bean则直接使用ObjectFactory
+		 */
 		Object sharedInstance = getSingleton(beanName);
 		if (sharedInstance != null && args == null) {
 			if (logger.isTraceEnabled()) {
@@ -254,12 +261,20 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 					logger.trace("Returning cached instance of singleton bean '" + beanName + "'");
 				}
 			}
+			// 返回对应的实例， 有时候存在诸如BeanFactory的情况并不是直接返回实例本身而是返回指定方法返回的实例
 			bean = getObjectForBeanInstance(sharedInstance, name, beanName, null);
 		}
 
 		else {
 			// Fail if we're already creating this bean instance:
 			// We're assumably within a circular reference.
+
+			// 失败，如果我们已经创建了这个bean实例:
+			// 我们假设在一个循环引用中。
+
+			/**
+			 *  只有在单例情况下才会尝试解决循环依赖，原型模式情况下，如果存在
+			 */
 			if (isPrototypeCurrentlyInCreation(beanName)) {
 				throw new BeanCurrentlyInCreationException(beanName);
 			}

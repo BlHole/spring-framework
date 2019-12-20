@@ -6,5 +6,67 @@
 		   http://www.springframework.org/schema/beans/spring-beans.xsd
 ">
 
-	<bean id="myBean" class="bean.MyBean" />
+	<import resource="spring-aop.xml"/>
+
+	<bean id="myBean" name="myBean2,myBean3" class="bean.MyBean" >
+		<meta key="speed" value="12ms"/>
+	</bean>
+	<alias name="myBean" alias="aliasMyBean"/>
+
+	<!-- lookup test -->
+	<bean id="teacher" class="bean.lookup.Teacher"/>
+	<bean id="student" class="bean.lookup.Student"/>
+	<bean id="lookupBean" class="bean.lookup.LookUpTestCode" >
+		<!--<lookup-method name="getBean" bean="teacher"/>-->
+		<lookup-method name="getBean" bean="student"/>
+	</bean>
+	<!-- lookup test -->
+
+	<!-- replaced-method-test-->
+	<bean id="testMethod" class="bean.replacedMenthod.ChangeMethod">
+		<replaced-method name="changeMe" replacer="replaced">
+			<arg-type match="java.lang.String"></arg-type>
+		</replaced-method>
+	</bean>
+	<bean id="replaced" class="bean.replacedMenthod.ChangerMethodReplaced"/>
+	<!-- replaced-method-test -->
+
+	<!-- static factory bean -->
+	<bean id="bmwCar" class="bean.factoryBean.StaticFactoryBean" factory-method="getCar">
+		<constructor-arg value="3"></constructor-arg>
+	</bean>
+	<bean id="audiCar" class="bean.factoryBean.StaticFactoryBean" factory-method="getCar">
+		<constructor-arg value="2"></constructor-arg>
+	</bean>
+	<!-- static factory bean -->
+
+	<!-- instance factory bean -->
+	<bean id="carFactory" class="bean.factoryBean.InstanceCarFactory">
+		<property name="map">
+			<map>
+				<entry key="4">
+					<bean class="bean.factoryBean.Car">
+						<property name="id" value="4"></property>
+						<property name="name" value="Honda"></property>
+						<property name="price" value="300000"></property>
+					</bean>
+				</entry>
+				<entry key="6">
+					<bean class="bean.factoryBean.Car">
+						<property name="id" value="6"></property>
+						<property name="name" value="ford"></property>
+						<property name="price" value="500000"></property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="car4" factory-bean="carFactory" factory-method="getCar">
+		<constructor-arg value="4"></constructor-arg>
+	</bean>
+	<bean id="car6" factory-bean="carFactory" factory-method="getCar">
+		<constructor-arg value="6"></constructor-arg>
+	</bean>
+	<!-- instance factory bean -->
+
 </beans>
