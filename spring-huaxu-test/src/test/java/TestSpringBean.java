@@ -11,11 +11,8 @@ import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * <p>项目名称: spring</p>
@@ -51,6 +48,14 @@ public class TestSpringBean {
 		method.changeMe();
 		method.changeMe("test");
 	}
+
+	@Test
+	public void testCarFactoryBean() throws Exception {
+		BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("spring-context.xml"));
+		Car car = (Car) beanFactory.getBean("testCarFactoryBean");
+		System.out.println(car);
+	}
+
 	@Test
 	public void testStaticFactoryBean() throws IOException {
 		ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");

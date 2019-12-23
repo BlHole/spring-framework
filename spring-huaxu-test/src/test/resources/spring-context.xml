@@ -41,7 +41,7 @@
 	<!-- static factory bean -->
 
 	<!-- instance factory bean -->
-	<bean id="carFactory" class="bean.factoryBean.InstanceCarFactory">
+	<bean id="carFactory" class="bean.factoryBean.InstanceCarFactoryBean">
 		<property name="map">
 			<map>
 				<entry key="4">
@@ -69,4 +69,5 @@
 	</bean>
 	<!-- instance factory bean -->
 
+	<!--<bean id="testCarFactoryBean" class="bean.factoryBean.CarFactoryBean" carInfo="1,测试testCarFactoryBean,21"/>-->
 </beans>

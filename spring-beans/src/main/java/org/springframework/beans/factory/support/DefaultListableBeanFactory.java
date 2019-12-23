@@ -933,7 +933,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 				// 不能再修改启动时间集合元素(为了稳定的迭代)
 				synchronized (this.beanDefinitionMap) {
 					// TODO 疑问, 这里没有直接add, 而是new 一个List去覆盖旧的意义是什么
-					// 解答： 防止jdk暴力扩容， 节省空间
+					// 开始以为是： 防止jdk暴力扩容， 节省空间
+					// 后来发现是： 是fail-safe，不能保证遍历的是最新内容，有额外的空间消耗
 					this.beanDefinitionMap.put(beanName, beanDefinition);
 					List<String> updatedDefinitions = new ArrayList<>(this.beanDefinitionNames.size() + 1);
 					updatedDefinitions.addAll(this.beanDefinitionNames);

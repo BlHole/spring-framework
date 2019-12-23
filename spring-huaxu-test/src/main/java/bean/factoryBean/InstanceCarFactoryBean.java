@@ -9,7 +9,7 @@ import java.util.Map;
  * <p>create: 2019/12/19 16:19</p>
  * <p>author：huaxu</p>
  */
-public class InstanceCarFactory {
+public class InstanceCarFactoryBean {
 
 	private Map<Integer, Car> map = new HashMap<Integer, Car>();
 
