@@ -268,10 +268,8 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		else {
 			// Fail if we're already creating this bean instance:
 			// We're assumably within a circular reference.
-
 			// 失败，如果我们已经创建了这个bean实例:
 			// 我们假设在一个循环引用中。
-
 			/**
 			 *  只有在单例情况下才会尝试解决循环依赖，原型模式情况下，如果存在
 			 *  A中有B的属性，B中有A的属性，那么当依赖注入的时候，就会产生当A还未创建完的时候因为
