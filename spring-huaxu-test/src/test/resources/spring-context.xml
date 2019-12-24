@@ -6,8 +6,6 @@
 		   http://www.springframework.org/schema/beans/spring-beans.xsd
 ">
 
-	<import resource="spring-aop.xml"/>
-
 	<bean id="myBean" name="myBean2,myBean3" class="bean.MyBean" >
 		<meta key="speed" value="12ms"/>
 	</bean>
@@ -69,5 +67,18 @@
 	</bean>
 	<!-- instance factory bean -->
 
+	<!-- 【FactoryBean<T>】 此测试需要自定义xsd -->
 	<!--<bean id="testCarFactoryBean" class="bean.factoryBean.CarFactoryBean" carInfo="1,测试testCarFactoryBean,21"/>-->
+
+	<!-- 循环依赖 -->
+		<!--<bean id="beanA" class="bean.cycleCreatebean.BeanA">-->
+			<!--<constructor-arg index="0" ref="beanB"/>-->
+		<!--</bean>-->
+		<!--<bean id="beanB" class="bean.cycleCreatebean.BeanB">-->
+			<!--<constructor-arg index="0" ref="beanC"/>-->
+		<!--</bean>-->
+		<!--<bean id="beanC" class="bean.cycleCreatebean.BeanC">-->
+			<!--<constructor-arg index="0" ref="beanA"/>-->
+		<!--</bean>-->
+	<!-- 循环依赖 -->
 </beans>

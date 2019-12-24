@@ -1,5 +1,4 @@
 import bean.MyBean;
-import bean.aop.AopBean;
 import bean.factoryBean.Car;
 import bean.lookup.LookUpTestCode;
 import bean.replacedMenthod.ChangeMethod;
@@ -42,7 +41,7 @@ public class TestSpringBean {
 	}
 
 	@Test
-	public void testMethod(){
+	public void testMethod() {
 		BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("spring-context.xml"));
 		ChangeMethod method = (ChangeMethod) beanFactory.getBean("testMethod");
 		method.changeMe();
@@ -74,11 +73,9 @@ public class TestSpringBean {
 		System.out.println(card6);
 	}
 
-
 	@Test
-	public void testAop(){
-		BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("spring-aop.xml"));
-		AopBean bean = (AopBean) beanFactory.getBean("aopBean");
-		Assert.assertTrue("huaxu".equals(bean.getName()));
+	public void testCycleCreateBean() throws Exception {
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+		System.out.println(context.getParent());
 	}
 }

@@ -592,6 +592,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				logger.trace("Eagerly caching bean '" + beanName +
 						"' to allow for resolving potential circular references");
 			}
+			/**
+			 *  spring容器通过提前暴露刚完成构造器注入但为完成其他步骤的bean来完成的,
+			 *  而且只能解决单例作用域的bean循环依赖.  [通过提前暴露的一个单例工厂方法,
+			 *  从而使其它bean能引用到该bean.]
+			 */
 			addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, mbd, bean));
 		}
 
