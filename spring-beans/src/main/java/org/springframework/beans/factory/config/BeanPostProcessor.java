@@ -33,6 +33,14 @@ import org.springframework.lang.Nullable;
  * while post-processors that wrap beans with proxies will normally
  * implement {@link #postProcessAfterInitialization}.
  *
+ *  允许对新的bean示例进行自定义的修改，例如检查标志接口或进行代理封装
+ *
+ *  spring上下文会在它的beng定义中自动检测BeanPostProcessor实例，并将它们应用于随后创建的每一个bean实例
+ *
+ *  implement {@link #postProcessAfterInitialization}.
+ *  通常，通过实现BeanPostProcessor的postProcessBeforeInitialization方法（配合标记接口，如@Autowired）来填充bean实例，
+ *  通过BeanPostProcessor的postProcessAfterInitialization方法进行bean实例的代理
+ *
  * @author Juergen Hoeller
  * @since 10.10.2003
  * @see InstantiationAwareBeanPostProcessor
@@ -47,6 +55,10 @@ public interface BeanPostProcessor {
 	 * initialization callbacks (like InitializingBean's {@code afterPropertiesSet}
 	 * or a custom init-method). The bean will already be populated with property values.
 	 * The returned bean instance may be a wrapper around the original.
+	 *
+	 * 在bean实例的初始化方法（例如InitializingBean的afterPropertiesSet或自定义的init-method）回调之前，
+	 * spring会应用此方法到bean实例上。一般用于bean实例的属性值的填充
+	 *
 	 * <p>The default implementation returns the given {@code bean} as-is.
 	 * @param bean the new bean instance
 	 * @param beanName the name of the bean
@@ -72,6 +84,11 @@ public interface BeanPostProcessor {
 	 * <p>This callback will also be invoked after a short-circuiting triggered by a
 	 * {@link InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation} method,
 	 * in contrast to all other BeanPostProcessor callbacks.
+	 *
+	 *  在bean实例的初始化方法（例如InitializingBean的afterPropertiesSet或自定义的init-method）回调之后，
+	 *  spring会应用此方法到bean实例上。
+	 *  在有FactoryBean时，此方法会在FactoryBean实例与FactoryBean的目标对象创建时各调用一次
+	 *
 	 * <p>The default implementation returns the given {@code bean} as-is.
 	 * @param bean the new bean instance
 	 * @param beanName the name of the bean

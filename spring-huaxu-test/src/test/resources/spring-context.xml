@@ -81,4 +81,9 @@
 			<!--<constructor-arg index="0" ref="beanA"/>-->
 		<!--</bean>-->
 	<!-- 循环依赖 -->
+
+	<!-- Aware -->
+	<bean id="awareBeanTest" class="bean.aware.AwareBeanTest"/>
+	<bean id="testBeanFactoryAware" class="bean.aware.TestBeanFactoryAware"/>
+	<!-- Aware -->
 </beans>

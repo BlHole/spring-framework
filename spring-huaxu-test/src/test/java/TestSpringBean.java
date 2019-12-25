@@ -1,4 +1,5 @@
 import bean.MyBean;
+import bean.aware.TestBeanFactoryAware;
 import bean.factoryBean.Car;
 import bean.lookup.LookUpTestCode;
 import bean.replacedMenthod.ChangeMethod;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import java.io.IOException;
 
@@ -75,7 +77,15 @@ public class TestSpringBean {
 
 	@Test
 	public void testCycleCreateBean() throws Exception {
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+		context.setAllowBeanDefinitionOverriding(false); // 是否允许循环依赖
 		System.out.println(context.getParent());
+	}
+
+	@Test
+	public void testBeanFactoryAware() throws Exception {
+		BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("spring-context.xml"));
+		TestBeanFactoryAware model = (TestBeanFactoryAware) beanFactory.getBean("testBeanFactoryAware");
+		model.show();
 	}
 }

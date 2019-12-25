@@ -81,6 +81,23 @@ public interface SmartInstantiationAwareBeanPostProcessor extends InstantiationA
 	 * for the affected bean has been built for a call to this method already,
 	 * it will be exposes as final bean reference by default).
 	 * <p>The default implementation returns the given {@code bean} as-is.
+	 *
+	 *
+	 * 获取指定bean的早期访问引用，
+	 * 通常用于解析循环引用。
+	 * 这个回调给后处理程序一个机会来暴露一个包装
+	 * 早期——也就是说，在目标bean实例被完全初始化之前。
+	 * 暴露的对象应该等于什么
+	 * {@link # postprocessbeforeinitial} / {@link # postprocessafterinitial初始化}
+	 * 否则就会暴露。注意，此方法返回的对象将
+	 * 用作bean引用，除非后处理器返回一个不同的
+	 * 处理后回调的包装。换句话说，就是那些后期处理
+	 * 回调可能最终会暴露相同的引用，也可能是另一种情况
+	 * 从那些后续回调中返回原始bean实例(如果是包装器的话)
+	 * 因为受影响的bean已经为调用此方法而构建，
+	 * 默认情况下，它将作为最终bean引用公开)。
+	 * 默认实现按原样返回给定的{@code bean}。
+	 *
 	 * @param bean the raw bean instance
 	 * @param beanName the name of the bean
 	 * @return the object to expose as bean reference

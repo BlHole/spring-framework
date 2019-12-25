@@ -103,6 +103,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	private boolean singletonsCurrentlyInDestruction = false;
 
 	/** Disposable bean instances: bean name to disposable instance. */
+	/** 一次性bean实例:将bean名称转换为一次性实例 */
 	private final Map<String, Object> disposableBeans = new LinkedHashMap<>();
 
 	/** Map between containing bean names: bean name to Set of bean names that the bean contains. */
@@ -153,7 +154,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 * 添加指定的单例工厂来构建指定的单例
 	 * 如果有必要。
 	 *
-	 * 被要求立即注册单身人士，例如能够
+	 * 被要求立即注册单例，例如能够
 	 * 解析循环引用。
 	 * @param beanName the name of the bean
 	 * @param singletonFactory the factory for the singleton object
