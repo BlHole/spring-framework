@@ -8,10 +8,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import java.io.IOException;
 
@@ -22,7 +19,7 @@ import java.io.IOException;
  * <p>创建日期: 2019/06/26 16:21</p>
  * <p>创建用户：huaxu</p>
  */
-public class TestSpringBean {
+public class TestBeanFactory {
 
 	@Test
 	public void testBeanFactory() {
@@ -59,7 +56,7 @@ public class TestSpringBean {
 
 	@Test
 	public void testStaticFactoryBean() throws IOException {
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+		BeanFactory context = new XmlBeanFactory(new ClassPathResource("spring-context.xml"));
 		Car bmw = (Car) context.getBean("bmwCar");
 		Car audi = (Car) context.getBean("audiCar");
 		System.out.println(bmw);
@@ -73,13 +70,6 @@ public class TestSpringBean {
 		Car card6 = (Car) beanFactory.getBean("car6");
 		System.out.println(card4);
 		System.out.println(card6);
-	}
-
-	@Test
-	public void testCycleCreateBean() throws Exception {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
-		context.setAllowBeanDefinitionOverriding(false); // 是否允许循环依赖
-		System.out.println(context.getParent());
 	}
 
 	@Test
