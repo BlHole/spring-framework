@@ -1,5 +1,7 @@
 import bean.MyBean;
+import bean.prepareRefresh.MyClassPathXmlApplicationContext;
 import org.junit.Test;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -23,5 +25,12 @@ public class TestClassPathXmlApplicationContext {
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
 		context.setAllowBeanDefinitionOverriding(false); // 是否允许循环依赖
 		System.out.println(context.getParent());
+	}
+
+	@Test
+	// vm VAR=GOGO
+	public void testMyClassPathXmlApplicationContext() throws Exception {
+		BeanFactory factory = new MyClassPathXmlApplicationContext("spring-context.xml");
+		System.out.println(factory.getBean(MyBean.class));
 	}
 }
