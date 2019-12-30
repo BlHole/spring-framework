@@ -680,7 +680,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @see #getBeanFactory()
 	 */
 	protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
+		// 初始化bean， 并进行XML文件的读取
 		refreshBeanFactory();
+		// 返回实体的beanFactory属性
 		return getBeanFactory();
 	}
 
