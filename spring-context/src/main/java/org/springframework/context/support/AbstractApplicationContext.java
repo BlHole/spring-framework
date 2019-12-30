@@ -511,6 +511,39 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.applicationListeners;
 	}
 
+	/**
+	 *  @Date: 4:34 PM 2019/12/30
+	 *  @Author: huaxu
+	 *  @Description:
+	 *   具体的初始化步骤
+	 *
+	 * 		(1) 初始化前的准备工作:
+	 * 			对系统属性或者环境变量进行准备及验证.
+	 *
+	 * 		(2) 初始化BeanFactory, 并进行XML文件读取.
+	 * 			这里是复用BeanFactory中配置文件读取解析及其它功能
+	 *
+	 * 		(3) 对BeanFactory进行各种功能填充
+	 * 			@Qualifier与 @Autowired就是这一步骤的支持
+	 *
+	 * 		(4) 子类覆盖方法做额外的处理
+	 * 			比如实现postProcessBeanFactory来方便程序员在业务上做进一步的处理
+	 * 		(5) 激活各种BeanFactory处理器
+	 *
+	 * 		(6) 注册拦截bean创建的bean处理器, 这里只是注册, 真正的调用是在getBea时候
+	 *
+	 * 		(7) 为上下文初始化Message源, 即对不同语言的消息体进行国际化处理
+	 *
+	 * 		(8) 初始化应用消息广播器, 并放入"applicationEventMulticaster"bean中
+	 *
+	 * 		(9) 留给子类出初始化其它的bean
+	 *
+	 * 		(10) 在所有注册的bean中查找listener bean, 注册到消息广播器中
+	 *
+	 * 		(11) 初始化剩下的单实例(非惰性的)
+	 *
+	 * 		(12) 完成刷新过程, 通知声明周期处理器lifecycProcessor刷新过程, 同时发出ContexttRefreshEvent通知别人
+	 */
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
