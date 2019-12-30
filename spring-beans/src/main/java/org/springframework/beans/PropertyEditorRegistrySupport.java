@@ -196,6 +196,7 @@ public class PropertyEditorRegistrySupport implements PropertyEditorRegistry {
 
 	/**
 	 * Actually register the default editors for this registry instance.
+	 * 是这里进行对应类型转化的定义
 	 */
 	private void createDefaultEditors() {
 		this.defaultEditors = new HashMap<>(64);

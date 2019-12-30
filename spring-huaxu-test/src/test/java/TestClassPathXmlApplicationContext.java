@@ -1,5 +1,6 @@
 import bean.MyBean;
 import bean.prepareRefresh.MyClassPathXmlApplicationContext;
+import bean.propertyEditor.DateBean;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -32,5 +33,11 @@ public class TestClassPathXmlApplicationContext {
 	public void testMyClassPathXmlApplicationContext() throws Exception {
 		BeanFactory factory = new MyClassPathXmlApplicationContext("spring-context.xml");
 		System.out.println(factory.getBean(MyBean.class));
+	}
+
+	@Test
+	public void testDateBean() throws Exception {
+		BeanFactory factory = new ClassPathXmlApplicationContext("spring-context.xml");
+		System.out.println(factory.getBean(DateBean.class));
 	}
 }

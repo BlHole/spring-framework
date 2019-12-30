@@ -86,4 +86,33 @@
 	<bean id="awareBeanTest" class="bean.aware.AwareBeanTest"/>
 	<bean id="testBeanFactoryAware" class="bean.aware.TestBeanFactoryAware"/>
 	<!-- Aware -->
+
+	<!-- 自定义属性编辑器 -->
+		<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+			<!-- 方案一 -->
+			<!--<property name="customEditors">-->
+				<!--<map>-->
+					<!--<entry key="java.util.Date">-->
+						<!--<bean class="bean.propertyEditor.DatePropertyEditor">-->
+							<!--<property name="format" value="yyyy-MM-dd"/>-->
+						<!--</bean>-->
+					<!--</entry>-->
+				<!--</map>-->
+			<!--</property>-->
+
+			<!-- 方案二 -->
+			<property name="propertyEditorRegistrars">
+				<list>
+					<bean class="bean.propertyEditor.DatePropertyEditorRegistry"/>
+				</list>
+			</property>
+		</bean>
+		<bean id="dateBean" class="bean.propertyEditor.DateBean">
+			<property name="dateValue">
+				<value>2019-11-11</value>
+			</property>
+		</bean>
+	<!-- 自定义属性编辑器 -->
+
+
 </beans>

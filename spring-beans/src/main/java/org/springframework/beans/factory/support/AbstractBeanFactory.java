@@ -1496,6 +1496,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			return value;
 		}
 
+		// 如果存在语言解析器则使用解析器的方法进行解析。
 		Scope scope = null;
 		if (beanDefinition != null) {
 			String scopeName = beanDefinition.getScope();
