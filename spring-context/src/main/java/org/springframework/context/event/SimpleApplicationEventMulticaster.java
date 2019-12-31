@@ -131,6 +131,7 @@ public class SimpleApplicationEventMulticaster extends AbstractApplicationEventM
 	public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableType eventType) {
 		ResolvableType type = (eventType != null ? eventType : resolveDefaultEventType(event));
 		Executor executor = getTaskExecutor();
+		// 这里其实获取到了所有的监听器时间， 只不过处理的是默认否选的那个
 		for (ApplicationListener<?> listener : getApplicationListeners(event, type)) {
 			if (executor != null) {
 				executor.execute(() -> invokeListener(listener, event));

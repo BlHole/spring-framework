@@ -114,5 +114,30 @@
 		</bean>
 	<!-- 自定义属性编辑器 -->
 
+	<!-- 使用beanFactoryPostProcessor属性 -->
+	<bean id="bfpp" class="bean.beanFactoryPostProcessor.MyRemovePropertBeanFactoryPostProcessor">
+		<property name="properts">
+			<set>
+				<value>adress123456</value>
+				<value>admin</value>
+				<value>aobama</value>
+				<value>Microsoft</value>
+			</set>
+		</property>
+	</bean>
 
+	<bean id="simpleBeanFactory" class="bean.beanFactoryPostProcessor.SimpleBeanFactory">
+		<property name="conn" value="adress123456"/>
+		<property name="pass" value="admin"/>
+		<property name="name" value="huaxu"/>
+	</bean>
+	<!-- 使用beanFactoryPostProcessor属性 -->
+
+	<!-- 使用beanPostProcessor -->
+		<!--<bean id="myBeanPostProcessor" class="bean.beanPostProcessor.MyBeanPostProcessor"/>-->
+	<!-- 使用beanPostProcessor -->
+
+	<!-- 使用eventMuluicaster监听器 -->
+	<bean class="bean.eventMulticaster.MyTestListener"/>
+	<!-- 使用eventMuluicaster监听器 -->
 </beans>
