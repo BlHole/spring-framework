@@ -67,6 +67,13 @@ public class TestClassPathXmlApplicationContext {
 	}
 
 	@Test
+	public void testLifecyc() throws Exception {
+		BeanFactory factory = new ClassPathXmlApplicationContext("spring-context.xml");
+		((ClassPathXmlApplicationContext) factory).start();
+		((ClassPathXmlApplicationContext) factory).stop();
+	}
+
+	@Test
 	public void testListener() throws Exception {
 		ApplicationContext factory = new ClassPathXmlApplicationContext("spring-context.xml");
 		MyEvent myEvent = new MyEvent("hello", "msg");

@@ -149,4 +149,8 @@
 	<!-- 使用eventMuluicaster监听器 -->
 	<bean class="bean.eventMulticaster.MyTestListener"/>
 	<!-- 使用eventMuluicaster监听器 -->
+
+	<!-- 使用lifecyc -->
+	<bean id="myLifecycleProcessor" class="bean.lifecycleProcessor.MyLifecycleProcessor"/>
+	<!-- 使用lifecyc -->
 </beans>
