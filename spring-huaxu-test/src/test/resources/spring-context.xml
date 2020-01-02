@@ -107,6 +107,15 @@
 				</list>
 			</property>
 		</bean>
+
+		<!-- 方案三 -->
+		<bean id="conversionServiceFactoryBean" class="org.springframework.context.support.ConversionServiceFactoryBean">
+			<property name="converters">
+				<list>
+					<bean class="bean.converter.String2DateConverter"/>
+				</list>
+			</property>
+		</bean>
 		<bean id="dateBean" class="bean.propertyEditor.DateBean">
 			<property name="dateValue">
 				<value>2019-11-11</value>

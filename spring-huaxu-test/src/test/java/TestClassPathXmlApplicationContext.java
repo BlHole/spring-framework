@@ -1,5 +1,6 @@
 import bean.MyBean;
 import bean.beanPostProcessor.MyBeanPostProcessor;
+import bean.converter.String2DateConverter;
 import bean.eventMulticaster.MyEvent;
 import bean.prepareRefresh.MyClassPathXmlApplicationContext;
 import bean.propertyEditor.DateBean;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -46,6 +48,7 @@ public class TestClassPathXmlApplicationContext {
 		BeanFactory factory = new ClassPathXmlApplicationContext("spring-context.xml");
 		System.out.println(factory.getBean(DateBean.class));
 	}
+
 
 	@Test
 	public void testBeanFactoryPostProcessor() throws Exception {
